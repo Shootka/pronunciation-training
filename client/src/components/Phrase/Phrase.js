@@ -4,7 +4,6 @@ import AudioReactRecorder, {RecordState} from 'audio-react-recorder'
 import icons from "../../assets/icons.js";
 import './Phrase.scss'
 
-
 const Phrase = ({phrase, setPhrase}) => {
   const {speak, voices} = useSpeechSynthesis();
   const [stop, setStop] = useState(false)
