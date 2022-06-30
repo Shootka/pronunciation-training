@@ -1,0 +1,26 @@
+.field {
+  max-width: 376px;
+  max-height: 400px;
+  min-height: 150px;
+  resize: vertical;
+  border-radius: 20px;
+  border: 2px solid #544a7d;
+}
+
+.control {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.submit {
+  max-width: 150px;
+  margin: 0 auto;
+  border-radius: 20px;
+  border: none;
+  background-color: #544a7d;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 20px;
+  color: #FFFFFF;
+}
