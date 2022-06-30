@@ -15,6 +15,7 @@ const Phrase = ({phrase}) => {
     setStop(!stop)
     console.log('start')
     setRecordState(RecordState.START)
+
   }
 
   const stopRecording = () => {
@@ -30,22 +31,23 @@ const Phrase = ({phrase}) => {
 
   return (
     <div className={"phrase-box"}>
-      <div className={'phrase-box__container'}
-           onClick={() => setShow(!show)}>
-        <h2 className={show ? "phrase-box__title-active" : "phrase-box__title"}>{phrase}</h2>
-        <div className={"phrase-box__button-box"}
-             onClick={event => (event.stopPropagation())}>
-          <button className="phrase-box__play"
-                  onClick={() => speak({text: phrase, voice: voices[10]})}/>
-          <div style={{display: "none"}}>
-            <AudioReactRecorder type={'audio/mp3'} state={recordState} onStop={onStop}/>
+        <div className={'phrase-box__container'}
+             onClick={() => setShow(!show)}>
+          <button onClick={e => e.stopPropagation()}>-</button>
+          <h2 className={show ? "phrase-box__title-active" : "phrase-box__title"}>{phrase}</h2>
+          <div className={"phrase-box__button-box"}
+               onClick={event => (event.stopPropagation())}>
+            <button className="phrase-box__play"
+                    onClick={() => speak({text: phrase, voice: voices[10]})}/>
+            <div style={{display: "none"}}>
+              <AudioReactRecorder type={'audio/mp3'} state={recordState} onStop={onStop}/>
+            </div>
+            <button
+              className={"phrase-box__recorder"}
+              style={{backgroundColor: `${!stop ? 'lawngreen' : '#fc5050'}`}}
+              onClick={() => !stop ? startRecording() : stopRecording()}/>
           </div>
-          <button
-            className={"phrase-box__recorder"}
-            style={{backgroundColor: `${!stop ? 'lawngreen' : '#fc5050'}`}}
-            onClick={() => !stop ? startRecording() : stopRecording()}/>
         </div>
-      </div>
     </div>
   );
 };
