@@ -1,7 +1,8 @@
 .App {
+  font-family: 'Gantari', sans-serif;
   text-align: center;
-  background: #544a7d;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #ffd452, #544a7d);  /* Chrome 10-25, Safari 5.1-6 */
+  background: #544a7d;
+  background: -webkit-linear-gradient(to right, #ffd452, #544a7d);
   background: linear-gradient(to right, #ffd452, #544a7d);
   height: 100vh;
   padding: 20px;
