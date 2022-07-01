@@ -1,10 +1,11 @@
 import React, {useState, useContext} from 'react';
+import context from "../../context/context";
 import './Form.scss'
-import PhraseContext from "../../context";
 
 const Form = () => {
   const [value, setValue] = useState("")
-  const {phraseList, setPhraseList} = useContext(PhraseContext)
+  const {phraseList, setPhraseList} = useContext(context.PhraseContext)
+  const {modalActive, setModalActive} = useContext(context.ModalContext)
   const handleChange = (e) => {
     setValue(e.target.value)
   }
@@ -13,6 +14,7 @@ const Form = () => {
     e.preventDefault()
     setPhraseList([...phraseList, value])
     setValue('')
+    setModalActive(!modalActive)
   }
 
   return (

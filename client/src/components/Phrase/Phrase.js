@@ -1,15 +1,17 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {useSpeechSynthesis} from "react-speech-kit";
 import AudioReactRecorder, {RecordState} from 'audio-react-recorder'
 import icons from "../../assets/icons.js";
 import './Phrase.scss'
+import context from "../../context/context";
 
-const Phrase = ({phrase, setPhrase}) => {
+const Phrase = ({phrase}) => {
   const {speak, voices} = useSpeechSynthesis();
   const [stop, setStop] = useState(false)
   const [blob, setBlob] = useState()
   const [show, setShow] = useState(false)
   const [recordState, setRecordState] = useState(RecordState.NONE)
+  const {phraseList, setPhraseList} = useContext(context.PhraseContext)
 
   const startRecording = () => {
     setStop(!stop)
@@ -27,8 +29,9 @@ const Phrase = ({phrase, setPhrase}) => {
   }
   const onDeletePhrase = (e) => {
     e.stopPropagation()
-    setPhrase()
+    setPhraseList(phraseList.filter(elem => elem !== phrase))
   }
+  console.log(voices)
   return (
     <div className={"phrase-box"}>
       <div className={'phrase-box__container'}

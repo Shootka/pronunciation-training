@@ -1,10 +1,8 @@
 import './App.css';
 import PhraseList from "./components/PhraseList/PhraseList";
 import {useEffect, useContext} from "react";
-import PhraseContext from "./context";
 
 function App() {
-
 
   useEffect(() => {
     //fetch to load phrase here

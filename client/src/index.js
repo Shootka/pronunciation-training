@@ -3,16 +3,19 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import PhraseContext from "./context";
+import context from "./context/context";
 
 
 function Main() {
   const [phraseList, setPhraseList] = useState(['Google Cloud Text-to-Speech enables developers to synthesize natural-sounding speech with 100+ voices', 'available in multiple languag', 'Lorem ipsum dolor sit amet, consectetur adipisicing ', 'exe'])
+  const [modalActive, setModalActive] = useState(false)
   return (
     <React.StrictMode>
-      <PhraseContext.Provider value={{phraseList, setPhraseList}}>
-        <App/>
-      </PhraseContext.Provider>
+      <context.PhraseContext.Provider value={{phraseList, setPhraseList}}>
+        <context.ModalContext.Provider value={{modalActive, setModalActive}}>
+          <App/>
+        </context.ModalContext.Provider>
+      </context.PhraseContext.Provider>
     </React.StrictMode>
   )
 }

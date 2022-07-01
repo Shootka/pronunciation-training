@@ -4,21 +4,22 @@ import './PhraseList.scss'
 import Modal from "../Modal/Modal";
 import icons from "../../assets/icons.js";
 import Form from "../Form/Form";
-import PhraseContext from "../../context";
+import context from "../../context/context";
 
 
 const PhraseList = () => {
-  const [modalActive, setModalActive] = useState(false)
-  const {phraseList, setPhraseList} = useContext(PhraseContext)
+
+  const {phraseList, setPhraseList} = useContext(context.PhraseContext)
+  const {modalActive, setModalActive} = useContext(context.ModalContext)
+
   return (
     <div className={'container'}>
       <div className={'list'}>
-        {!phraseList.length && <h2 color={'white'}>You don`t have a phrase <br/> add new</h2>}
+        {!phraseList.length && <h2>Uuups, you don`t have a phrase :)</h2>}
         {!!phraseList.length && phraseList?.map(ph => {
           return <Phrase
             key={ph?._id || Math.random()}
-            phrase={ph}
-            setPhrase={setPhraseList}/>
+            phrase={ph}/>
         })}
       </div>
       <button className={'add-bnt'} onClick={() => setModalActive(true)}>
