@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { PronunciationService } from './pronunciation.service';
 import { CreatePhrases } from './dto/create-phrase.dto';
 import { GetPhrases } from './dto/get-phrases.dto';
@@ -12,8 +12,8 @@ import { FileInterceptor } from '@nestjs/platform-express';
 export class PronunciationController {
     constructor(private pronunciationService: PronunciationService) {}
 
-    @Get('allphrases')
-    async allphrases(@Body() info: GetPhrases) {
+    @Get('allphrases/:language')
+    async allphrases(@Param() info: GetPhrases) {
         return this.pronunciationService.allphrases(info);
     }
 
