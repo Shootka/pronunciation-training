@@ -13,8 +13,6 @@ const Phrase = ({phrase}) => {
   }
   const filteredVoices = useMemo(() => filterVoice(voices), [voices])
 
-  console.log(filteredVoices)
-
   const [stop, setStop] = useState(false)
   const [blob, setBlob] = useState()
 

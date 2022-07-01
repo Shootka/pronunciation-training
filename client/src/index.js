@@ -6,13 +6,24 @@ import reportWebVitals from './reportWebVitals';
 import context from "./context/context";
 
 function Main() {
-  const [phraseList, setPhraseList] = useState(['¿Me puede ayudar con esto?', 'available in multiple languag', 'Lorem ipsum dolor sit amet, consectetur adipisicing ', 'exe'])
+  const [phraseList, setPhraseList] = useState([
+    {lang: 'us', phrases: ['¿Me puede ayudar con esto?',
+        'available in multiple languag',
+        'Lorem ipsum dolor sit amet, consectetur adipisicing ', 'exe']},
+    {lang: 'fr', phrases: []},
+    {lang: 'sp', phrases: []}
+  ])
+
+  const [lang, setLang] = useState('us')
   const [modalActive, setModalActive] = useState(false)
+
   return (
     <React.StrictMode>
       <context.PhraseContext.Provider value={{phraseList, setPhraseList}}>
         <context.ModalContext.Provider value={{modalActive, setModalActive}}>
-          <App/>
+          <context.FilterContext.Provider value={{lang, setLang}}>
+            <App/>
+          </context.FilterContext.Provider>
         </context.ModalContext.Provider>
       </context.PhraseContext.Provider>
     </React.StrictMode>
@@ -23,8 +34,4 @@ ReactDOM.render(
   <Main/>,
   document.getElementById('root')
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
