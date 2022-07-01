@@ -14,18 +14,6 @@ export class PronunciationService {
                 @InjectModel('sp') private readonly spPronunciation: Model<PronunciationDocument>
     ) {}
 
-    async check(lang: CreatePhrases) {
-        // const { language, phrase } = lang
-        // const doc = new this.usPronunciation(lang)
-        // await doc.save()
-        // console.log(dto.body.phrase);
-        // // var buf = new Buffer;
-        // const f: Buffer = dto.body.phrase
-        // console.log(f);
-        // writeFileSync('tt.txt', f)
-        return ')))'
-    }
-
     internationalPronunciation(lang: string) {
         switch (lang) {
             case 'us':
@@ -39,8 +27,7 @@ export class PronunciationService {
 
     async allphrases(info: GetPhrases) {
         const Pronunciation = this.internationalPronunciation(info.language)
-        await Pronunciation.find({})
-        return 'Good'
+        return await Pronunciation.find({})
     }
 
     async createphrase(info: CreatePhrases) {
