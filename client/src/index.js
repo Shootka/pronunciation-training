@@ -5,7 +5,6 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import context from "./context/context";
 
-
 function Main() {
   const [phraseList, setPhraseList] = useState(['Google Cloud Text-to-Speech enables developers to synthesize natural-sounding speech with 100+ voices', 'available in multiple languag', 'Lorem ipsum dolor sit amet, consectetur adipisicing ', 'exe'])
   const [modalActive, setModalActive] = useState(false)

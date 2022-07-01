@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useMemo} from 'react';
 import {useSpeechSynthesis} from "react-speech-kit";
 import AudioReactRecorder, {RecordState} from 'audio-react-recorder'
 import icons from "../../assets/icons.js";
@@ -7,8 +7,15 @@ import context from "../../context/context";
 
 const Phrase = ({phrase}) => {
   const {speak, voices} = useSpeechSynthesis();
+  const lang = "en-US"
+  const filterVoice = (voices) =>{
+    return voices.filter(el => lang === el?.lang && el?.name?.indexOf('Google' ) >= 0)
+  }
+  const filteredVoices = useMemo(() => filterVoice(voices), [voices])
+
   const [stop, setStop] = useState(false)
   const [blob, setBlob] = useState()
+
   const [show, setShow] = useState(false)
   const [recordState, setRecordState] = useState(RecordState.NONE)
   const {phraseList, setPhraseList} = useContext(context.PhraseContext)
@@ -31,7 +38,6 @@ const Phrase = ({phrase}) => {
     e.stopPropagation()
     setPhraseList(phraseList.filter(elem => elem !== phrase))
   }
-  console.log(voices)
   return (
     <div className={"phrase-box"}>
       <div className={'phrase-box__container'}
@@ -46,11 +52,10 @@ const Phrase = ({phrase}) => {
             : "phrase-box__title bigger"}>{phrase}</h2>}
         {phrase.length < 39
           && <h2 className={"phrase-box__title "}>{phrase}</h2>}
-
         <div className={"phrase-box__button-box"}
              onClick={event => (event.stopPropagation())}>
           <button className="btn"
-                  onClick={() => speak({text: phrase, voice: voices[10]})}>
+                  onClick={() => speak({text: phrase, voice: filteredVoices[0]})}>
             {icons.PLAY}</button>
           <div style={{display: "none"}}>
             <AudioReactRecorder type={'audio/mp3'} state={recordState} onStop={onStop}/>

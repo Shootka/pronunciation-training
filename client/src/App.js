@@ -9,8 +9,10 @@ function App() {
   }, [])
   return (
     <div className="App">
-      <h1 style={{margin: '40px', color: '#ffffff'}}>Language Trainer</h1>
-      <PhraseList/>
+      <div className={'bg'}>
+        <h1 style={{margin: '40px', color: '#ffffff'}}>Language Trainer</h1>
+        <PhraseList/>
+      </div>
     </div>
   );
 }

@@ -4,6 +4,8 @@ import './Form.scss'
 
 const Form = () => {
   const [value, setValue] = useState("")
+  const [error, setError] = useState('')
+
   const {phraseList, setPhraseList} = useContext(context.PhraseContext)
   const {modalActive, setModalActive} = useContext(context.ModalContext)
   const handleChange = (e) => {
@@ -12,9 +14,12 @@ const Form = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    setPhraseList([...phraseList, value])
-    setValue('')
-    setModalActive(!modalActive)
+    if (value !== '') {
+      setPhraseList([...phraseList, value])
+      setValue('')
+      setModalActive(!modalActive)
+      setError('')
+    } else {setError('Field can`t be empty!')}
   }
 
   return (
@@ -25,6 +30,7 @@ const Form = () => {
           className={'field'}
           value={value}
           onChange={(e) => handleChange(e)}/>
+        {error}
       </label>
       <input className={'submit'} type="submit" value="add"/>
     </form>

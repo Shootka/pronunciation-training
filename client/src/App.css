@@ -1,31 +1,39 @@
 .App {
-  font-family: 'Gantari', sans-serif;
-  text-align: center;
-  background: #544a7d;
+    font-family: 'Gantari', sans-serif;
+    text-align: center;
+    height: 100%;
+    width: 100%;
+}
 
-  height: 100%;
-  padding: 20px;
+.bg {
+    background-color: #544a7d;
+    background-size: contain;
+    padding: 50px;
+    height: 100vh;
 }
-h2{
-  color: #FFFFFF;
+
+h2 {
+    color: #FFFFFF;
 }
-.btn{
-  padding: 0;
-  cursor: pointer;
-  border: none;
-  background-color: transparent;
+
+.btn {
+    padding: 0;
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
 }
+
 @media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+    .App-logo {
+        animation: App-logo-spin infinite 20s linear;
+    }
 }
 
 @keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
