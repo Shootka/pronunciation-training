@@ -1,13 +1,26 @@
-import React from 'react';
+import React, {useState} from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import context from "./context/context";
+
+function Main() {
+  const [phraseList, setPhraseList] = useState(['¿Me puede ayudar con esto?', 'available in multiple languag', 'Lorem ipsum dolor sit amet, consectetur adipisicing ', 'exe'])
+  const [modalActive, setModalActive] = useState(false)
+  return (
+    <React.StrictMode>
+      <context.PhraseContext.Provider value={{phraseList, setPhraseList}}>
+        <context.ModalContext.Provider value={{modalActive, setModalActive}}>
+          <App/>
+        </context.ModalContext.Provider>
+      </context.PhraseContext.Provider>
+    </React.StrictMode>
+  )
+}
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <Main/>,
   document.getElementById('root')
 );
 

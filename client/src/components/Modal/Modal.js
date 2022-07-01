@@ -1,11 +1,10 @@
-import React, {useState} from 'react';
+import React from 'react';
 import './Modal.scss'
 
-const Modal = ({children}) => {
-
+const Modal = ({active, setActive,children}) => {
   return (
-    <div className= {modalOpen ? 'modal active' : 'modal '} onClick={() => setModalOpen(false)}>
-      <div className= {modalOpen ? 'modal__content active' : 'modal__content '} onClick={e => e.stopPropagation()}>
+    <div className= {active ? 'modal active' : 'modal '} onClick={() => setActive(false)}>
+      <div className= {active ? 'modal__content active' : 'modal__content '} onClick={e => e.stopPropagation()}>
         {children}
       </div>
     </div>
