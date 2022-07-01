@@ -11,7 +11,6 @@ const PhraseList = ({flag}) => {
   const {phraseList, setPhraseList} = useContext(context.PhraseContext)
   const {modalActive, setModalActive} = useContext(context.ModalContext)
 
-
   const renderList = (phrasesWithLang) => {
     return !!phrasesWithLang.length && phraseList[0]?.phrases?.map(ph => {
       return <Phrase

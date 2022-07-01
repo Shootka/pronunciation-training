@@ -3,14 +3,16 @@ import PhraseList from "./components/PhraseList/PhraseList";
 import {useEffect, useContext} from "react";
 import Filter from "./components/Filter/Filter";
 import context from "./context/context";
+import axios from "axios";
 
 function App() {
-
   useEffect(() => {
+    axios.get(`/api/pronunciation/allphrases/`)
+      .then(res => console.log(res.data))
     //fetch to load phrase here
   }, [])
   const {lang} = useContext(context.FilterContext)
-
+  console.log('app',lang)
   return (
     <div className="App">
       <div className={'bg'}>

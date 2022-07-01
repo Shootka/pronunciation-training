@@ -12,7 +12,8 @@ export class PronunciationService {
     constructor(@InjectModel('us') private readonly usPronunciation: Model<PronunciationDocument>,
                 @InjectModel('fr') private readonly frPronunciation: Model<PronunciationDocument>,
                 @InjectModel('sp') private readonly spPronunciation: Model<PronunciationDocument>
-    ) {}
+    ) {
+    }
 
     internationalPronunciation(lang: string) {
         switch (lang) {
@@ -44,6 +45,6 @@ export class PronunciationService {
     }
 
     async result(voice: Express.Multer.File) {
-        
+
     }
 }
