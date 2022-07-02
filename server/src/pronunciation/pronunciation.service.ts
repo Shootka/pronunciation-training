@@ -16,6 +16,7 @@ export class PronunciationService {
                 @InjectModel('es') private readonly esPronunciation: Model<PronunciationDocument>
     ) {}
 
+
     internationalPronunciation(lang: string) {
         switch (lang) {
             case 'en':
@@ -79,5 +80,6 @@ export class PronunciationService {
         //     .join('\n');
         // console.log(`Transcription: ${transcription}`);
         return 0
+
     }
 }

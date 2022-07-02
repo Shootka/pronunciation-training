@@ -7,10 +7,10 @@ import { Express } from 'express';
 import { FileInterceptor } from '@nestjs/platform-express';
 
 
-
 @Controller('pronunciation')
 export class PronunciationController {
-    constructor(private pronunciationService: PronunciationService) {}
+    constructor(private pronunciationService: PronunciationService) {
+    }
 
     @Get('allphrases/:language')
     async allphrases(@Param() info: GetPhrases) {
@@ -18,18 +18,18 @@ export class PronunciationController {
     }
 
     @Post('createphrase')
-    async createphrase(@Body() info: CreatePhrases) {        
+    async createphrase(@Body() info: CreatePhrases) {
         return this.pronunciationService.createphrase(info)
     }
 
     @Delete('deletephrase/:language/:id')
-    async deletephrase(@Param() info: DeletePhrases) {        
+    async deletephrase(@Param() info: DeletePhrases) {
         return this.pronunciationService.deletephrase(info)
     }
-    
+
     @Get('result')
     @UseInterceptors(FileInterceptor('voice'))
-    async result(@UploadedFile() voice: Express.Multer.File) {        
+    async result(@UploadedFile() voice: Express.Multer.File) {
         return this.pronunciationService.result(voice)
     }
 

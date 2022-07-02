@@ -25,39 +25,24 @@
 
   &__title {
     height: 30px;
-    white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;
     position: relative;
   }
-
-  &__title:active {
-    height: 100%;
-    overflow: visible;
-    white-space: pre-wrap;
+  .bigger::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    background: linear-gradient(180deg, transparent, #544a7d 130%);
   }
 
-  &__play {
-    height: 50px;
-    width: 264px;
-    color: white;
-    background-image: url("../../assets/icon/play.png");
-    background-position: center;
-    background-repeat: no-repeat;
-    cursor: pointer;
-    border: none;
-    background-color: transparent;
+  .bigger:active:after {
+  content: none;
   }
-
   &__recorder {
-    height: 40px;
-    width: 190px;
-    background-image: url("../../assets/icon/micro.svg");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    border: none;
     border-radius: 50px;
-    cursor: pointer;
+    padding: 1px 6px;
   }
 }
