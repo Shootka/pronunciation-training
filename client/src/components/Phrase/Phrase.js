@@ -5,11 +5,15 @@ import icons from "../../assets/icons.js";
 import './Phrase.scss'
 import context from "../../context/context";
 
-const Phrase = ({phrase}) => {
+const Phrase = ({phrase, id}) => {
   const {speak, voices} = useSpeechSynthesis();
   const {filter} = useContext(context.FilterContext)
-  const filterVoice = (voices) =>{
-    return voices.filter(el => el?.lang.toLowerCase().indexOf(filter.lang) >= 0 && el.name.indexOf('Google') >= 0)
+  const filterVoice = (voices) => {
+    return voices
+      .filter(el => el?.lang
+          .toLowerCase()
+          .indexOf(filter.lang) >= 0
+        && el.name.indexOf('Google') >= 0)
   }
   const filteredVoices = useMemo(() => filterVoice(voices), [voices])
   const [stop, setStop] = useState(false)
@@ -38,7 +42,7 @@ const Phrase = ({phrase}) => {
     setPhraseList(phraseList.filter(elem => elem !== phrase))
   }
   return (
-    <div className={"phrase-box"}>
+    <div id={id} className={"phrase-box"} >
       <div className={'phrase-box__container'}
            onClick={() => setShow(!show)}>
         <button className='delete btn'

@@ -14,6 +14,7 @@ const PhraseList = () => {
     return !!phraseList?.length && phraseList?.map(ph => {
       return <Phrase
         key={ph?._id || Math.random()}
+        id = {ph?._id}
         phrase={ph.phrase}/>
     })
   }

@@ -15,10 +15,8 @@ function App() {
       .catch(err => console.error(err))
   }, [filter.lang])
 
-
   return (
     <div className="App">
-
       <div className={'bg'}>
         <h3 className={'language'}>{filter.lang}</h3>
         <div className={'score'}>

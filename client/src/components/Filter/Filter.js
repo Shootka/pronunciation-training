@@ -4,16 +4,14 @@ import './Filter.scss'
 import context from "../../context/context";
 
 const Filter = () => {
-  const {lang, setLang} = useContext(context.FilterContext)
+  const {filter,setFilter} = useContext(context.FilterContext)
 
   const onFlagClick = (e) => {
-    setLang(e.currentTarget.id)
-    // console.log(e.currentTarget.id)
-
+    setFilter({...filter, lang:e.currentTarget.id})
   }
-console.log(lang)
+
   const onGenderClick = (e) => {
-    console.log(e.currentTarget.id)
+    setFilter({...filter, gender:e.currentTarget.id})
   }
 
   return (
@@ -33,4 +31,4 @@ console.log(lang)
 
 };
 
-export default Filter;
+export default React.memo(Filter);
