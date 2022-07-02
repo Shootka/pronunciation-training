@@ -5,7 +5,7 @@ import { PronunciationService } from './pronunciation.service';
 import { PronunciationSchema } from './schemas/pronunciation.schema'; 
 
 @Module({
-  imports: [MongooseModule.forFeature([{ name: 'us', schema: PronunciationSchema }, { name: 'fr', schema: PronunciationSchema }, { name: 'sp', schema: PronunciationSchema }])],
+  imports: [MongooseModule.forFeature([{ name: 'en', schema: PronunciationSchema }, { name: 'fr', schema: PronunciationSchema }, { name: 'es', schema: PronunciationSchema }])],
   controllers: [PronunciationController],
   providers: [PronunciationService]
 })
