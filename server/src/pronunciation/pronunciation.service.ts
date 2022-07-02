@@ -48,25 +48,25 @@ export class PronunciationService {
 
     async result(voice: Express.Multer.File) {
 
-        const client = new SpeechClient();
-        
-        // The audio file's encoding, sample rate in hertz, and BCP-47 language code
-        const audio = {
-            content: readFileSync('aud.mp3').toString('base64'),
-        };
-        const config = {
-            encoding: 1,
-            sampleRateHertz: 8000,
-            languageCode: 'en-US',
-        };
-        const request: protos.google.cloud.speech.v1.IRecognizeRequest = {
-            audio: audio,
-            config: config,
-        };
+        // const client = new SpeechClient();
+        //
+        // // The audio file's encoding, sample rate in hertz, and BCP-47 language code
+        // const audio = {
+        //     content: readFileSync('aud.mp3').toString('base64'),
+        // };
+        // const config = {
+        //     encoding: 1,
+        //     sampleRateHertz: 8000,
+        //     languageCode: 'en-US',
+        // };
+        // const request: protos.google.cloud.speech.v1.IRecognizeRequest = {
+        //     audio: audio,
+        //     config: config,
+        // };
 
         // Detects speech in the audio file
-        const [response] = await client.recognize(request);
-        console.log(response.results);
+        // const [response] = await client.recognize(request);
+        // console.log(response.results);
         // const [operation] = await client.longRunningRecognize(request);
 
 // Get a Promise representation of the final result of the job
