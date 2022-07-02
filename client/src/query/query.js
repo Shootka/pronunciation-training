@@ -18,5 +18,10 @@ const addNewPhrase = (lang, phrase) => {
       console.log(res)
     })
 }
+const deletePhrase = (lang, id) => {
+  axios.delete(`/api/pronunciation/deletephrase/${lang}/${id}`)
+    .then(r => console.log(r.data))
+    .catch(err => console.error(err))
+}
 
-export default {fetchPhrase, addNewPhrase}
+export default {fetchPhrase, addNewPhrase, deletePhrase}

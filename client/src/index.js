@@ -7,7 +7,11 @@ import context from "./context/context";
 
 function Main() {
   const [phraseList, setPhraseList] = useState([])
-  const [filter, setFilter] = useState({lang: "us", gender: 'male'})
+  const [filter, setFilter] = useState(JSON.parse(window.sessionStorage.getItem('filter'))
+    || {
+    lang: "en",
+    gender: 'male'
+  })
   const [modalActive, setModalActive] = useState(false)
 
   return (

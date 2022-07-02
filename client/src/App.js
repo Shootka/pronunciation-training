@@ -11,9 +11,13 @@ function App() {
 
   useEffect(() => {
     axios.get(`/api/pronunciation/allphrases/${filter.lang}`)
-      .then(res => setPhraseList(res.data || []))
+      .then(res => {setPhraseList(res.data)})
       .catch(err => console.error(err))
   }, [filter.lang])
+
+  useEffect(() => {
+    window.sessionStorage.setItem('filter', JSON.stringify(filter))
+  }, [filter])
 
   return (
     <div className="App">

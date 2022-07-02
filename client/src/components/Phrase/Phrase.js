@@ -2,8 +2,9 @@ import React, {useState, useContext, useMemo} from 'react';
 import {useSpeechSynthesis} from "react-speech-kit";
 import AudioReactRecorder, {RecordState} from 'audio-react-recorder'
 import icons from "../../assets/icons.js";
-import './Phrase.scss'
 import context from "../../context/context";
+import query from "../../query/query";
+import './Phrase.scss'
 
 const Phrase = ({phrase, id}) => {
   const {speak, voices} = useSpeechSynthesis();
@@ -21,7 +22,7 @@ const Phrase = ({phrase, id}) => {
 
   const [show, setShow] = useState(false)
   const [recordState, setRecordState] = useState(RecordState.NONE)
-  const {phraseList, setPhraseList} = useContext(context.PhraseContext)
+  const {setPhraseList} = useContext(context.PhraseContext)
 
   const startRecording = () => {
     setStop(!stop)
@@ -37,12 +38,13 @@ const Phrase = ({phrase, id}) => {
     console.log('audioData', audioData)
     setBlob(audioData)
   }
-  const onDeletePhrase = (e) => {
+  const onDeletePhrase = async (e) => {
     e.stopPropagation()
-    setPhraseList(phraseList.filter(elem => elem !== phrase))
+    query.deletePhrase(filter.lang, id)
+    setPhraseList(await query.fetchPhrase(filter.lang))
   }
   return (
-    <div id={id} className={"phrase-box"} >
+    <div className={"phrase-box"}>
       <div className={'phrase-box__container'}
            onClick={() => setShow(!show)}>
         <button className='delete btn'
