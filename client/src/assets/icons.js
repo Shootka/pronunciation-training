@@ -505,9 +505,9 @@ const MALE = <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" view
 </svg>
 
 const COUNTRY = [
-  {id: 'us', fl: USA},
+  {id: 'en', fl: USA},
   {id: 'fr', fl: FRANCE},
-  {id: 'sp', fl: SPAIN}
+  {id: 'es', fl: SPAIN}
 ]
 
 const GENDER = [

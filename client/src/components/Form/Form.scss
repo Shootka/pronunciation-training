@@ -5,6 +5,7 @@
   resize: vertical;
   border-radius: 20px;
   border: 2px solid #544a7d;
+
 }
 
 .control {
@@ -23,4 +24,13 @@
   cursor: pointer;
   font-size: 20px;
   color: #FFFFFF;
+  transition: 0.35s;
+  transform: scale(1);
+}
+
+.submit:hover {
+  background-color: lawngreen;
+  color: #544a7d;
+  transition: 0.35s;
+  transform: scale(1.1);
 }

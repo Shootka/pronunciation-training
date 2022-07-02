@@ -6,22 +6,15 @@ import reportWebVitals from './reportWebVitals';
 import context from "./context/context";
 
 function Main() {
-  const [phraseList, setPhraseList] = useState([
-    {lang: 'us', phrases: ['¿Me puede ayudar con esto?',
-        'available in multiple languag',
-        'Lorem ipsum dolor sit amet, consectetur adipisicing ', 'exe']},
-    {lang: 'fr', phrases: []},
-    {lang: 'sp', phrases: []}
-  ])
-
-  const [lang, setLang] = useState('us')
+  const [phraseList, setPhraseList] = useState([])
+  const [filter, setFilter] = useState({lang: "us", gender: 'male'})
   const [modalActive, setModalActive] = useState(false)
 
   return (
     <React.StrictMode>
       <context.PhraseContext.Provider value={{phraseList, setPhraseList}}>
         <context.ModalContext.Provider value={{modalActive, setModalActive}}>
-          <context.FilterContext.Provider value={{lang, setLang}}>
+          <context.FilterContext.Provider value={{filter, setFilter}}>
             <App/>
           </context.FilterContext.Provider>
         </context.ModalContext.Provider>
