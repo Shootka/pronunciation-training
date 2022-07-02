@@ -6,14 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import context from "./context/context";
 
 function Main() {
-  const [phraseList, setPhraseList] = useState([
-    {lang: 'us', phrases: ['¿Me puede ayudar con esto?',
-        'available in multiple languag',
-        'Lorem ipsum dolor sit amet, consectetur adipisicing ', 'exe']},
-    {lang: 'fr', phrases: []},
-    {lang: 'sp', phrases: []}
-  ])
-
+  const [phraseList, setPhraseList] = useState([])
   const [lang, setLang] = useState('us')
   const [modalActive, setModalActive] = useState(false)
 

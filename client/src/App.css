@@ -2,14 +2,15 @@
     font-family: 'Gantari', sans-serif;
     text-align: center;
     height: 100%;
-    min-width: 100%;
+    min-width: 100vh;
 }
 
 .bg {
     background-color: #544a7d;
     background-size: contain;
     padding: 30px;
-    height: 100vh;
+    height: 100%;
+    min-width: 100vh;
 }
 
 h2 {
