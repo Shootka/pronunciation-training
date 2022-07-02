@@ -22,8 +22,8 @@ export class PronunciationController {
         return this.pronunciationService.createphrase(info)
     }
 
-    @Delete('deletephrase')
-    async deletephrase(@Body() info: DeletePhrases) {
+    @Delete('deletephrase/:language/:id')
+    async deletephrase(@Param() info: DeletePhrases) {
         return this.pronunciationService.deletephrase(info)
     }
 
