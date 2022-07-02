@@ -7,14 +7,14 @@ import context from "./context/context";
 
 function Main() {
   const [phraseList, setPhraseList] = useState([])
-  const [lang, setLang] = useState('us')
+  const [filter, setFilter] = useState({lang: "us", gender: 'male'})
   const [modalActive, setModalActive] = useState(false)
 
   return (
     <React.StrictMode>
       <context.PhraseContext.Provider value={{phraseList, setPhraseList}}>
         <context.ModalContext.Provider value={{modalActive, setModalActive}}>
-          <context.FilterContext.Provider value={{lang, setLang}}>
+          <context.FilterContext.Provider value={{filter, setFilter}}>
             <App/>
           </context.FilterContext.Provider>
         </context.ModalContext.Provider>

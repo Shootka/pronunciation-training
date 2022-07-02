@@ -1,6 +1,5 @@
 import axios from "axios";
 
-
 const fetchPhrase = async (lang) => {
   let arr = []
   console.log(lang)
@@ -15,7 +14,9 @@ const addNewPhrase = (lang, phrase) => {
     language: lang,
     phrase: phrase
   })
-    .then(res => console.log(res.data))
+    .then((res) => {
+      console.log(res)
+    })
 }
 
 export default {fetchPhrase, addNewPhrase}

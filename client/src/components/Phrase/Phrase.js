@@ -7,12 +7,11 @@ import context from "../../context/context";
 
 const Phrase = ({phrase}) => {
   const {speak, voices} = useSpeechSynthesis();
-  const lang = "en-US"
+  const {filter} = useContext(context.FilterContext)
   const filterVoice = (voices) =>{
-    return voices.filter(el => lang === el?.lang && el?.name?.indexOf('Google' ) >= 0)
+    return voices.filter(el => el?.lang.toLowerCase().indexOf(filter.lang) >= 0 && el.name.indexOf('Google') >= 0)
   }
   const filteredVoices = useMemo(() => filterVoice(voices), [voices])
-
   const [stop, setStop] = useState(false)
   const [blob, setBlob] = useState()
 
@@ -42,19 +41,20 @@ const Phrase = ({phrase}) => {
     <div className={"phrase-box"}>
       <div className={'phrase-box__container'}
            onClick={() => setShow(!show)}>
-        <button className='btn'
+        <button className='delete btn'
                 onClick={e => onDeletePhrase(e)}>
           {icons.DEL}
         </button>
-        {phrase.length > 39
+        {phrase.length > 47
           && <h2 className={show
             ? "phrase-box__title-active bigger"
             : "phrase-box__title bigger"}>{phrase}</h2>}
-        {phrase.length < 39
+        {phrase.length < 47
           && <h2 className={"phrase-box__title "}>{phrase}</h2>}
         <div className={"phrase-box__button-box"}
              onClick={event => (event.stopPropagation())}>
           <button className="btn"
+                  style={{height: '48px'}}
                   onClick={() => speak({text: phrase, voice: filteredVoices[0]})}>
             {icons.PLAY}</button>
           <div style={{display: "none"}}>
@@ -70,4 +70,4 @@ const Phrase = ({phrase}) => {
   );
 };
 
-export default Phrase;
+export default React.memo(Phrase);

@@ -46,3 +46,16 @@
     padding: 1px 6px;
   }
 }
+.delete{
+  transform: scale(1);
+  transition: 0.35s;
+  border-radius: 50%;
+  height: 30px
+}
+.delete:hover {
+  transform: scale(1.2);
+  transition: 0.35s;
+  background-color: #fc5050;
+  border-radius: 50%;
+  height: 30px
+}

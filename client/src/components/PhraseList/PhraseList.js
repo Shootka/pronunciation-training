@@ -36,4 +36,4 @@ const PhraseList = () => {
   );
 };
 
-export default PhraseList;
+export default React.memo(PhraseList);

@@ -10,19 +10,16 @@ const Form = () => {
   const {setPhraseList} = useContext(context.PhraseContext)
   const {modalActive, setModalActive} = useContext(context.ModalContext)
 
-  const {lang} = useContext(context.FilterContext)
-
-
-
+  const {filter} = useContext(context.FilterContext)
   const handleChange = (e) => {
     setValue(e.target.value)
   }
 
-  const handleSubmit = async  (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     if (value !== '') {
-      await query.addNewPhrase(lang, value)
-      setPhraseList(await query.fetchPhrase(lang))
+      await query.addNewPhrase(filter.lang, value)
+      setPhraseList(await query.fetchPhrase(filter.lang))
       setValue('')
       setModalActive(!modalActive)
       setError('')
