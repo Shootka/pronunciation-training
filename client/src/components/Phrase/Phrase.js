@@ -1,4 +1,4 @@
-import React, {useState, useContext, useMemo} from 'react';
+import React, {useState, useContext, useMemo, useEffect} from 'react';
 import {useSpeechSynthesis} from "react-speech-kit";
 import AudioReactRecorder, {RecordState} from 'audio-react-recorder'
 import icons from "../../assets/icons.js";
@@ -12,12 +12,22 @@ const Phrase = ({phrase, id, number}) => {
 
   const [stop, setStop] = useState(false)
   const [show, setShow] = useState(false)
+  const [score, setScore] = useState(0)
+
+  const [countOfTry, setCountOfTry] = useState(0)
+  const [amountScore, setAmountScore] = useState(0)
 
   const [recordState, setRecordState] = useState(RecordState.NONE)
+
   const {setPhraseList} = useContext(context.PhraseContext)
   const {setSelectPhrase} = useContext(context.selectPhraseContext)
 
-  const [select, setSelect] = useState({id: number, lang: filter.lang})
+  const [select, setSelect] = useState({
+    id: number,
+    lang: filter.lang,
+    last: score,
+    better: score
+  })
 
   const filterVoice = (voices) => {
     return voices
@@ -28,32 +38,45 @@ const Phrase = ({phrase, id, number}) => {
         && el.name.indexOf('Google') >= 0
       )
   }
+
   const filteredVoices = useMemo(() => filterVoice(voices), [voices])
 
   const startRecording = () => {
     setStop(!stop)
     setRecordState(RecordState.START)
   }
+
   const onClickPhrase = (e) => {
+    console.log('click')
     setShow(!show)
     setSelect({
       id: number,
-      lang: filter.lang
+      lang: filter.lang,
+      last: score,
+      better: score,
     })
-    window.sessionStorage.setItem('selected', JSON.stringify(select))
     setSelectPhrase(select)
   }
+
   const stopRecording = () => {
     setStop(!stop)
     setRecordState(RecordState.STOP)
   }
+
   const onStop = async (audioData) => {
     let fd = new FormData()
+
     fd.append('voice', audioData.blob)
     fd.append('language', filter.lang)
     fd.append('phrase', phrase)
-    await query.sendAudio(fd)
+    // console.log({...select, last: score + 10}, 'teeee')
+    await query.sendAudio(fd, select, setSelectPhrase)
+    // setSelect({...select, last: score})
+    setSelectPhrase(select)
   }
+
+  window.sessionStorage.setItem('selected', JSON.stringify(select))
+
   const onDeletePhrase = async (e) => {
     e.stopPropagation()
     await query.deletePhrase(filter.lang, id, setPhraseList)

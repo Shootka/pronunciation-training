@@ -10,14 +10,16 @@ const PhraseList = () => {
 
   const {phraseList, setPhraseList} = useContext(context.PhraseContext)
   const {modalActive, setModalActive} = useContext(context.ModalContext)
-
+  const [activePhrases, setActivePhrases] = useState(
+    JSON.parse(window.sessionStorage.getItem('active-ph')) || [])
   const renderList = (phraseList) => {
     return !!phraseList?.length && phraseList?.map((ph, index) => {
       return <Phrase
         key={ph?._id || Math.random()}
         id={ph?._id}
         phrase={ph.phrase}
-        number={index + 1}/>
+        number={index + 1}
+        />
     })
   }
 

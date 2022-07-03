@@ -31,7 +31,7 @@ const deletePhrase = async (lang, id, set) => {
 
 }
 
-const sendAudio = (audio) => {
+const sendAudio = (audio, select, setSelect) => {
   axios({
     url: "/api/pronunciation/result",
     method: 'POST',
@@ -39,7 +39,11 @@ const sendAudio = (audio) => {
     headers: {
       "Content-Type": "multipart/form-data"
     }
-  }).then(res => console.log(res?.data))
+  }).then(res => {
+    window.sessionStorage.setItem('test', res.data)
+    console.log(res.data, ' - запрос')
+    setSelect({...select, last: res.data, better: select.better > res.data ? select.better : res.data})
+  })
 }
 
 export default {fetchPhrase, addNewPhrase, deletePhrase, sendAudio}
