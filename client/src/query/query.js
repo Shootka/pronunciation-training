@@ -9,20 +9,26 @@ const fetchPhrase = async (lang) => {
   return arr
 }
 
-const addNewPhrase = (lang, phrase) => {
+const addNewPhrase = async (lang, phrase, set) => {
   axios.post(`/api/pronunciation/createphrase`, {
     language: lang,
     phrase: phrase
   })
-    .then((res) => {
-      console.log(res)
+    .then(r => {
+      set(r.data)
+      console.log(r.data)
     })
-
-}
-const deletePhrase = (lang, id) => {
-  axios.delete(`/api/pronunciation/deletephrase/${lang}/${id}`)
-    .then(r => console.log(r.data))
     .catch(err => console.error(err))
+}
+
+const deletePhrase = async (lang, id, set) => {
+  axios.delete(`/api/pronunciation/deletephrase/${lang}/${id}`)
+    .then(r => {
+      set(r.data)
+      console.log(r)
+    })
+    .catch(err => console.error(err))
+
 }
 
 const sendAudio = (audio) => {
@@ -33,7 +39,7 @@ const sendAudio = (audio) => {
     headers: {
       "Content-Type": "multipart/form-data"
     }
-  })
+  }).then(res => console.log(res?.data))
 }
 
 export default {fetchPhrase, addNewPhrase, deletePhrase, sendAudio}

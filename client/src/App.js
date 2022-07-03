@@ -8,7 +8,9 @@ import ResultBox from "./components/ResultBox/ResultBox";
 
 function App() {
   const {filter} = useContext(context.FilterContext)
-  const {setPhraseList} = useContext(context.PhraseContext)
+  const {phraseList,setPhraseList} = useContext(context.PhraseContext)
+
+
   useEffect(() => {
     axios.get(`/api/pronunciation/allphrases/${filter.lang}`)
       .then(res => {setPhraseList(res.data)})
@@ -18,6 +20,8 @@ function App() {
   useEffect(() => {
     window.sessionStorage.setItem('filter', JSON.stringify(filter))
   }, [filter])
+
+  console.log(phraseList)
 
   return (
     <div className="App">

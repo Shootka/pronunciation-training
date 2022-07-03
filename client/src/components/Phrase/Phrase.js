@@ -32,7 +32,6 @@ const Phrase = ({phrase, id, number}) => {
 
   const startRecording = () => {
     setStop(!stop)
-    console.log('start')
     setRecordState(RecordState.START)
   }
   const onClickPhrase = (e) => {
@@ -46,23 +45,22 @@ const Phrase = ({phrase, id, number}) => {
   }
   const stopRecording = () => {
     setStop(!stop)
-    console.log('stop')
     setRecordState(RecordState.STOP)
   }
   const onStop = async (audioData) => {
     let fd = new FormData()
     fd.append('voice', audioData.blob)
-    console.log(fd.get('voice'));
+    fd.append('language', filter.lang)
+    fd.append('phrase', phrase)
     await query.sendAudio(fd)
   }
   const onDeletePhrase = async (e) => {
     e.stopPropagation()
-    query.deletePhrase(filter.lang, id)
-    setPhraseList(await query.fetchPhrase(filter.lang))
+    await query.deletePhrase(filter.lang, id, setPhraseList)
   }
+
   return (
     <div className={"phrase-box"}>
-
       <div className={'phrase-box__container'}
            id={id}
            onClick={(e) => onClickPhrase(e)}>
@@ -96,4 +94,4 @@ const Phrase = ({phrase, id, number}) => {
   );
 };
 
-export default React.memo(Phrase);
+export default Phrase;

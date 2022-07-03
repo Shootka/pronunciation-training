@@ -7,6 +7,7 @@ import Form from "../Form/Form";
 import context from "../../context/context";
 
 const PhraseList = () => {
+
   const {phraseList, setPhraseList} = useContext(context.PhraseContext)
   const {modalActive, setModalActive} = useContext(context.ModalContext)
 
@@ -19,8 +20,6 @@ const PhraseList = () => {
         number={index + 1}/>
     })
   }
-
-  console.log(phraseList)
 
   return (
     <div className={'container'}>
@@ -40,4 +39,4 @@ const PhraseList = () => {
   );
 };
 
-export default React.memo(PhraseList);
+export default PhraseList;
