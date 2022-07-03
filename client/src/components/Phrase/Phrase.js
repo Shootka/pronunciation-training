@@ -6,9 +6,18 @@ import context from "../../context/context";
 import query from "../../query/query";
 import './Phrase.scss'
 
-const Phrase = ({phrase, id}) => {
+const Phrase = ({phrase, id, number}) => {
   const {speak, voices} = useSpeechSynthesis();
   const {filter} = useContext(context.FilterContext)
+
+  const [stop, setStop] = useState(false)
+  const [show, setShow] = useState(false)
+
+  const [recordState, setRecordState] = useState(RecordState.NONE)
+  const {setPhraseList} = useContext(context.PhraseContext)
+  const {setSelectPhrase} = useContext(context.selectPhraseContext)
+
+  const [select, setSelect] = useState({id: number, lang: filter.lang})
 
   const filterVoice = (voices) => {
     return voices
@@ -19,18 +28,21 @@ const Phrase = ({phrase, id}) => {
         && el.name.indexOf('Google') >= 0
       )
   }
-
   const filteredVoices = useMemo(() => filterVoice(voices), [voices])
-  const [stop, setStop] = useState(false)
-  const [show, setShow] = useState(false)
-
-  const [recordState, setRecordState] = useState(RecordState.NONE)
-  const {setPhraseList} = useContext(context.PhraseContext)
 
   const startRecording = () => {
     setStop(!stop)
     console.log('start')
     setRecordState(RecordState.START)
+  }
+  const onClickPhrase = (e) => {
+    setShow(!show)
+    setSelect({
+      id: number,
+      lang: filter.lang
+    })
+    window.sessionStorage.setItem('selected', JSON.stringify(select))
+    setSelectPhrase(select)
   }
   const stopRecording = () => {
     setStop(!stop)
@@ -42,7 +54,6 @@ const Phrase = ({phrase, id}) => {
     fd.append('voice', audioData.blob)
     console.log(fd.get('voice'));
     await query.sendAudio(fd)
-
   }
   const onDeletePhrase = async (e) => {
     e.stopPropagation()
@@ -51,8 +62,11 @@ const Phrase = ({phrase, id}) => {
   }
   return (
     <div className={"phrase-box"}>
+
       <div className={'phrase-box__container'}
-           onClick={() => setShow(!show)}>
+           id={id}
+           onClick={(e) => onClickPhrase(e)}>
+        <div className={"phrase-box__number"}>{number}</div>
         <button className='delete btn'
                 onClick={e => onDeletePhrase(e)}>
           {icons.DEL}

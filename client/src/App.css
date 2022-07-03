@@ -8,7 +8,7 @@
 .main-title {
     margin: 40px;
     font-size: 45px;
-    color: #ffffff;
+    color: #efeaea;
 }
 
 .bg {
@@ -20,17 +20,9 @@
     position: relative;
 }
 
-.score {
-    position: absolute;
-    right: 85px;
-    top: 60px;
-    color: #FFFFFF;
-    font-size: 30px;
-}
-
 
 h2 {
-    color: #FFFFFF;
+    color: #efeaea;
 }
 
 .btn {
