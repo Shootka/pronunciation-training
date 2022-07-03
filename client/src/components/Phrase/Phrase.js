@@ -4,14 +4,12 @@ import AudioReactRecorder, {RecordState} from 'audio-react-recorder'
 import icons from "../../assets/icons.js";
 import context from "../../context/context";
 import query from "../../query/query";
-import axios from "axios";
-// import  FormData from 'form-data'
 import './Phrase.scss'
 
 const Phrase = ({phrase, id}) => {
   const {speak, voices} = useSpeechSynthesis();
   const {filter} = useContext(context.FilterContext)
-  let fd = new FormData
+
   const filterVoice = (voices) => {
     return voices
       .filter(el =>
@@ -24,7 +22,6 @@ const Phrase = ({phrase, id}) => {
 
   const filteredVoices = useMemo(() => filterVoice(voices), [voices])
   const [stop, setStop] = useState(false)
-  const [blob, setBlob] = useState()
   const [show, setShow] = useState(false)
 
   const [recordState, setRecordState] = useState(RecordState.NONE)
@@ -40,21 +37,12 @@ const Phrase = ({phrase, id}) => {
     console.log('stop')
     setRecordState(RecordState.STOP)
   }
-  const onStop = (audioData) => {
-
-    fd.append('voice', audioData.blob )
-    // audioData?.blob.arrayBuffer().then(r => console.log(r))
+  const onStop = async (audioData) => {
+    let fd = new FormData()
+    fd.append('voice', audioData.blob)
     console.log(fd.get('voice'));
-    setBlob(audioData)
+    await query.sendAudio(fd)
 
-    axios({
-      url: "/api/pronunciation/result",
-      method: 'POST',
-      data: fd,
-      headers: {
-        "Content-Type": "multipart/form-data"
-      }
-    })
   }
   const onDeletePhrase = async (e) => {
     e.stopPropagation()

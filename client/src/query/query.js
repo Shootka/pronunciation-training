@@ -17,6 +17,7 @@ const addNewPhrase = (lang, phrase) => {
     .then((res) => {
       console.log(res)
     })
+
 }
 const deletePhrase = (lang, id) => {
   axios.delete(`/api/pronunciation/deletephrase/${lang}/${id}`)
@@ -24,4 +25,15 @@ const deletePhrase = (lang, id) => {
     .catch(err => console.error(err))
 }
 
-export default {fetchPhrase, addNewPhrase, deletePhrase}
+const sendAudio = (audio) => {
+  axios({
+    url: "/api/pronunciation/result",
+    method: 'POST',
+    data: audio,
+    headers: {
+      "Content-Type": "multipart/form-data"
+    }
+  })
+}
+
+export default {fetchPhrase, addNewPhrase, deletePhrase, sendAudio}
