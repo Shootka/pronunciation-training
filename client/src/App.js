@@ -6,19 +6,28 @@ import context from "./context/context";
 import axios from "axios";
 
 function App() {
+  const {filter} = useContext(context.FilterContext)
+  const {setPhraseList} = useContext(context.PhraseContext)
+
   useEffect(() => {
-    axios.get(`/api/pronunciation/allphrases/`)
-      .then(res => console.log(res.data))
-    //fetch to load phrase here
-  }, [])
-  const {lang} = useContext(context.FilterContext)
-  console.log('app',lang)
+    axios.get(`/api/pronunciation/allphrases/${filter.lang}`)
+      .then(res => {setPhraseList(res.data)})
+      .catch(err => console.error(err))
+  }, [filter.lang])
+
+  useEffect(() => {
+    window.sessionStorage.setItem('filter', JSON.stringify(filter))
+  }, [filter])
+
   return (
     <div className="App">
       <div className={'bg'}>
-        <h1 style={{margin: '40px', color: '#ffffff'}}>Language Trainer</h1>
+        <div className={'score'}>
+          <p>Result</p>
+        </div>
+        <h1 className={'main-title'}>Language Trainer</h1>
         <Filter/>
-        <PhraseList flag={lang}/>
+        <PhraseList/>
       </div>
     </div>
   );

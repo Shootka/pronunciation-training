@@ -2,23 +2,30 @@ import React, {useState, useContext, useMemo} from 'react';
 import {useSpeechSynthesis} from "react-speech-kit";
 import AudioReactRecorder, {RecordState} from 'audio-react-recorder'
 import icons from "../../assets/icons.js";
-import './Phrase.scss'
 import context from "../../context/context";
+import query from "../../query/query";
+import './Phrase.scss'
 
-const Phrase = ({phrase}) => {
+const Phrase = ({phrase, id}) => {
   const {speak, voices} = useSpeechSynthesis();
-  const lang = "en-US"
-  const filterVoice = (voices) =>{
-    return voices.filter(el => lang === el?.lang && el?.name?.indexOf('Google' ) >= 0)
+  const {filter} = useContext(context.FilterContext)
+
+  const filterVoice = (voices) => {
+    return voices
+      .filter(el =>
+        el?.lang
+          .toLowerCase()
+          .indexOf(filter.lang) >= 0
+        && el.name.indexOf('Google') >= 0
+      )
   }
+
   const filteredVoices = useMemo(() => filterVoice(voices), [voices])
-
   const [stop, setStop] = useState(false)
-  const [blob, setBlob] = useState()
-
   const [show, setShow] = useState(false)
+
   const [recordState, setRecordState] = useState(RecordState.NONE)
-  const {phraseList, setPhraseList} = useContext(context.PhraseContext)
+  const {setPhraseList} = useContext(context.PhraseContext)
 
   const startRecording = () => {
     setStop(!stop)
@@ -30,31 +37,36 @@ const Phrase = ({phrase}) => {
     console.log('stop')
     setRecordState(RecordState.STOP)
   }
-  const onStop = (audioData) => {
-    console.log('audioData', audioData)
-    setBlob(audioData)
+  const onStop = async (audioData) => {
+    let fd = new FormData()
+    fd.append('voice', audioData.blob)
+    console.log(fd.get('voice'));
+    await query.sendAudio(fd)
+
   }
-  const onDeletePhrase = (e) => {
+  const onDeletePhrase = async (e) => {
     e.stopPropagation()
-    setPhraseList(phraseList.filter(elem => elem !== phrase))
+    query.deletePhrase(filter.lang, id)
+    setPhraseList(await query.fetchPhrase(filter.lang))
   }
   return (
     <div className={"phrase-box"}>
       <div className={'phrase-box__container'}
            onClick={() => setShow(!show)}>
-        <button className='btn'
+        <button className='delete btn'
                 onClick={e => onDeletePhrase(e)}>
           {icons.DEL}
         </button>
-        {phrase.length > 39
+        {phrase.length > 47
           && <h2 className={show
             ? "phrase-box__title-active bigger"
             : "phrase-box__title bigger"}>{phrase}</h2>}
-        {phrase.length < 39
+        {phrase.length < 47
           && <h2 className={"phrase-box__title "}>{phrase}</h2>}
         <div className={"phrase-box__button-box"}
              onClick={event => (event.stopPropagation())}>
           <button className="btn"
+                  style={{height: '48px'}}
                   onClick={() => speak({text: phrase, voice: filteredVoices[0]})}>
             {icons.PLAY}</button>
           <div style={{display: "none"}}>
@@ -70,4 +82,4 @@ const Phrase = ({phrase}) => {
   );
 };
 
-export default Phrase;
+export default React.memo(Phrase);
