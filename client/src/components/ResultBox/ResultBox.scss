@@ -1,0 +1,18 @@
+.result-box{
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+  color: #544a7d;
+  background-color: #efeaea;
+  gap: 10px;
+  right: 30px;
+  top: 155px;
+  border: 2px solid #544a7d;
+  padding: 20px;
+  border-radius: 22px;
+  p{
+    font-size: 18px;
+    margin: 0;
+  }
+}

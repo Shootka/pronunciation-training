@@ -7,11 +7,13 @@ import context from "./context/context";
 
 function Main() {
   const [phraseList, setPhraseList] = useState([])
+  const [selectPhrase, setSelectPhrase] = useState(JSON.parse(window.sessionStorage.getItem('selected')) || {})
+  console.log('--',selectPhrase)
   const [filter, setFilter] = useState(JSON.parse(window.sessionStorage.getItem('filter'))
     || {
-    lang: "en",
-    gender: 'male'
-  })
+      lang: "en",
+      gender: 'male'
+    })
   const [modalActive, setModalActive] = useState(false)
 
   return (
@@ -19,7 +21,9 @@ function Main() {
       <context.PhraseContext.Provider value={{phraseList, setPhraseList}}>
         <context.ModalContext.Provider value={{modalActive, setModalActive}}>
           <context.FilterContext.Provider value={{filter, setFilter}}>
-            <App/>
+            <context.selectPhraseContext.Provider value={{selectPhrase, setSelectPhrase}}>
+              <App/>
+            </context.selectPhraseContext.Provider>
           </context.FilterContext.Provider>
         </context.ModalContext.Provider>
       </context.PhraseContext.Provider>

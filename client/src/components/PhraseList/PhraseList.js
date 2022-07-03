@@ -1,4 +1,4 @@
-import React, {useContext, useMemo} from 'react';
+import React, {useContext, useMemo, useState} from 'react';
 import Phrase from "../Phrase/Phrase";
 import './PhraseList.scss'
 import Modal from "../Modal/Modal";
@@ -11,13 +11,16 @@ const PhraseList = () => {
   const {modalActive, setModalActive} = useContext(context.ModalContext)
 
   const renderList = (phraseList) => {
-    return !!phraseList?.length && phraseList?.map(ph => {
+    return !!phraseList?.length && phraseList?.map((ph, index) => {
       return <Phrase
         key={ph?._id || Math.random()}
-        id = {ph?._id}
-        phrase={ph.phrase}/>
+        id={ph?._id}
+        phrase={ph.phrase}
+        number={index + 1}/>
     })
   }
+
+  console.log(phraseList)
 
   return (
     <div className={'container'}>
