@@ -1,12 +1,11 @@
-import { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 import { PronunciationDocument } from './schemas/pronunciation.schema';
 import { CreatePhrases } from './dto/create-phrase.dto';
 import { GetPhrases } from './dto/get-phrases.dto';
 import { DeletePhrases } from './dto/delete-phrase.dto';
-import { SpeechClient, protos } from '@google-cloud/speech';
-import { readFileSync } from 'fs';
+const { Deepgram } = require("@deepgram/sdk");
 
 
 @Injectable()
@@ -36,48 +35,32 @@ export class PronunciationService {
         const Pronunciation = this.internationalPronunciation(info.language)
         const phrase = new Pronunciation(info)
         await phrase.save()
-        return 'Good'
+        return await Pronunciation.find({})
     }
 
     async deletephrase(info: DeletePhrases) {
         const Pronunciation = this.internationalPronunciation(info.language)
         await Pronunciation.findByIdAndDelete(info.id)
-        return 'Good'
+        return await Pronunciation.find({})
     }
 
-    async result(voice: Express.Multer.File) {
-
-        const client = new SpeechClient();
+    async result(voice: Express.Multer.File, info: CreatePhrases) {
+        const deepgram = new Deepgram('335d777d4ac72d907dcd4de4a28c9f58619c2ca1');        
+        const response = await deepgram.transcription.preRecorded(
+            { buffer: voice.buffer, mimetype: voice.mimetype },
+            { language: info.language }
+        )
         
-        // The audio file's encoding, sample rate in hertz, and BCP-47 language code
-        const audio = {
-            content: readFileSync('aud.mp3').toString('base64'),
-        };
-        const config = {
-            encoding: 1,
-            sampleRateHertz: 8000,
-            languageCode: 'en-US',
-        };
-        const request: protos.google.cloud.speech.v1.IRecognizeRequest = {
-            audio: audio,
-            config: config,
-        };
+        const resultPhrase = response.results.channels[0].alternatives[0].transcript.trim().toLowerCase().split(' ')
+        const phrase = info.phrase.trim().toLowerCase()
+            
+        let counter = 0
+        for (let i = 0; i < resultPhrase.length; i++) {
+            if (phrase.indexOf(resultPhrase[i]) != -1) {                
+                counter++                
+            }
+        }
 
-        // Detects speech in the audio file
-        const [response] = await client.recognize(request);
-        console.log(response.results);
-        // const [operation] = await client.longRunningRecognize(request);
-
-// Get a Promise representation of the final result of the job
-// const [response] = await operation.promise();
-// const transcription = response.results
-// console.log(transcription);
-
-        
-        // const transcription = response.results
-        //     .map(result => result.alternatives[0].transcript)
-        //     .join('\n');
-        // console.log(`Transcription: ${transcription}`);
-        return 0
+        return Math.ceil(counter / phrase.split(' ').length * 100)
     }
 }

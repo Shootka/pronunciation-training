@@ -27,10 +27,10 @@ export class PronunciationController {
         return this.pronunciationService.deletephrase(info)
     }
     
-    @Get('result')
+    @Post('result')
     @UseInterceptors(FileInterceptor('voice'))
-    async result(@UploadedFile() voice: Express.Multer.File) {        
-        return this.pronunciationService.result(voice)
+    async result(@UploadedFile() voice: Express.Multer.File, @Body() info: CreatePhrases) {
+        return this.pronunciationService.result(voice, info)
     }
 
 }
