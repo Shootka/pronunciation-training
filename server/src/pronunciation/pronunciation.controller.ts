@@ -26,12 +26,11 @@ export class PronunciationController {
     async deletephrase(@Param() info: DeletePhrases) {
         return this.pronunciationService.deletephrase(info)
     }
-
+    
     @Post('result')
     @UseInterceptors(FileInterceptor('voice'))
-    async result(@UploadedFile() voice: Express.Multer.File) {
-        console.log(voice)
-        return this.pronunciationService.result(voice)
+    async result(@UploadedFile() voice: Express.Multer.File, @Body() info: CreatePhrases) {
+        return this.pronunciationService.result(voice, info)
     }
-
+    
 }
