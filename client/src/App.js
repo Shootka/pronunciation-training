@@ -22,7 +22,6 @@ function App() {
   return (
     <div className="App">
       <div className={'bg'}>
-        <h3 className={'language'}>{filter.lang}</h3>
         <div className={'score'}>
           <p>Result</p>
         </div>

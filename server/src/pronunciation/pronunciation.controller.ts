@@ -1,10 +1,10 @@
-import { Body, Controller, Delete, Get, Param, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
-import { PronunciationService } from './pronunciation.service';
-import { CreatePhrases } from './dto/create-phrase.dto';
-import { GetPhrases } from './dto/get-phrases.dto';
-import { DeletePhrases } from './dto/delete-phrase.dto';
-import { Express } from 'express';
-import { FileInterceptor } from '@nestjs/platform-express';
+import {Body, Controller, Delete, Get, Param, Post, UploadedFile, UseInterceptors} from '@nestjs/common';
+import {PronunciationService} from './pronunciation.service';
+import {CreatePhrases} from './dto/create-phrase.dto';
+import {GetPhrases} from './dto/get-phrases.dto';
+import {DeletePhrases} from './dto/delete-phrase.dto';
+import {Express} from 'express';
+import {FileInterceptor} from '@nestjs/platform-express';
 
 
 @Controller('pronunciation')
@@ -27,9 +27,10 @@ export class PronunciationController {
         return this.pronunciationService.deletephrase(info)
     }
 
-    @Get('result')
+    @Post('result')
     @UseInterceptors(FileInterceptor('voice'))
     async result(@UploadedFile() voice: Express.Multer.File) {
+        console.log(voice)
         return this.pronunciationService.result(voice)
     }
 

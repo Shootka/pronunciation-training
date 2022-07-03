@@ -9,18 +9,21 @@ import './Phrase.scss'
 const Phrase = ({phrase, id}) => {
   const {speak, voices} = useSpeechSynthesis();
   const {filter} = useContext(context.FilterContext)
+
   const filterVoice = (voices) => {
     return voices
-      .filter(el => el?.lang
+      .filter(el =>
+        el?.lang
           .toLowerCase()
           .indexOf(filter.lang) >= 0
-        && el.name.indexOf('Google') >= 0)
+        && el.name.indexOf('Google') >= 0
+      )
   }
+
   const filteredVoices = useMemo(() => filterVoice(voices), [voices])
   const [stop, setStop] = useState(false)
-  const [blob, setBlob] = useState()
-
   const [show, setShow] = useState(false)
+
   const [recordState, setRecordState] = useState(RecordState.NONE)
   const {setPhraseList} = useContext(context.PhraseContext)
 
@@ -34,9 +37,12 @@ const Phrase = ({phrase, id}) => {
     console.log('stop')
     setRecordState(RecordState.STOP)
   }
-  const onStop = (audioData) => {
-    console.log('audioData', audioData)
-    setBlob(audioData)
+  const onStop = async (audioData) => {
+    let fd = new FormData()
+    fd.append('voice', audioData.blob)
+    console.log(fd.get('voice'));
+    await query.sendAudio(fd)
+
   }
   const onDeletePhrase = async (e) => {
     e.stopPropagation()
