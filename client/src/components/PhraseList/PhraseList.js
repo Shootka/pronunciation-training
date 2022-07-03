@@ -1,4 +1,4 @@
-import React, {useContext, useMemo, useState} from 'react';
+import React, {useContext, useMemo} from 'react';
 import Phrase from "../Phrase/Phrase";
 import './PhraseList.scss'
 import Modal from "../Modal/Modal";
@@ -6,16 +6,16 @@ import icons from "../../assets/icons.js";
 import Form from "../Form/Form";
 import context from "../../context/context";
 
-const PhraseList = ({flag}) => {
-
+const PhraseList = () => {
   const {phraseList, setPhraseList} = useContext(context.PhraseContext)
   const {modalActive, setModalActive} = useContext(context.ModalContext)
 
-  const renderList = (phrasesWithLang) => {
-    return !!phrasesWithLang.length && phraseList[0]?.phrases?.map(ph => {
+  const renderList = (phraseList) => {
+    return !!phraseList?.length && phraseList?.map(ph => {
       return <Phrase
         key={ph?._id || Math.random()}
-        phrase={ph}/>
+        id = {ph?._id}
+        phrase={ph.phrase}/>
     })
   }
 
@@ -37,4 +37,4 @@ const PhraseList = ({flag}) => {
   );
 };
 
-export default PhraseList;
+export default React.memo(PhraseList);

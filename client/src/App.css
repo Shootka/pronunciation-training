@@ -1,16 +1,33 @@
 .App {
     font-family: 'Gantari', sans-serif;
     text-align: center;
+    min-height: 100vh;
     height: 100%;
-    min-width: 100%;
+}
+
+.main-title {
+    margin: 40px;
+    font-size: 45px;
+    color: #ffffff;
 }
 
 .bg {
     background-color: #544a7d;
     background-size: contain;
     padding: 30px;
-    height: 100vh;
+    height: 100%;
+    min-height: 100vh;
+    position: relative;
 }
+
+.score {
+    position: absolute;
+    right: 85px;
+    top: 60px;
+    color: #FFFFFF;
+    font-size: 30px;
+}
+
 
 h2 {
     color: #FFFFFF;
