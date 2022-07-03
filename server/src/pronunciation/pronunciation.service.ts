@@ -15,6 +15,7 @@ export class PronunciationService {
                 @InjectModel('es') private readonly esPronunciation: Model<PronunciationDocument>
     ) {}
 
+
     internationalPronunciation(lang: string) {
         switch (lang) {
             case 'en':
@@ -63,4 +64,5 @@ export class PronunciationService {
 
         return Math.ceil(counter / phrase.split(' ').length * 100)
     }
+    
 }
