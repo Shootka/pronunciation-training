@@ -53,19 +53,18 @@ export class PronunciationService {
             { buffer: voice.buffer, mimetype: voice.mimetype },
             { language: info.language }
         )
-        console.log(response.results.channels[0].alternatives[0].transcript);
         
-        const resultPhrase = response.results.channels[0].alternatives[0].transcript.trim().toLowerCase().split(' ')
-        const phrase = info.phrase.trim().toLowerCase()
+        const resultPhrase = response.results.channels[0].alternatives[0].transcript.trim().toLowerCase()
+        const phrase = info.phrase.trim().toLowerCase().split(' ')
             
         let counter = 0
-        for (let i = 0; i < resultPhrase.length; i++) {
-            if (phrase.indexOf(resultPhrase[i]) != -1) {                
+        for (let i = 0; i < phrase.length; i++) {
+            if (resultPhrase.indexOf(phrase[i]) != -1) {                
                 counter++                
             }
         }
-
-        return Math.ceil(counter / phrase.split(' ').length * 100)
+        
+        return Math.ceil(counter / phrase.length * 100)
     }
     
 }
