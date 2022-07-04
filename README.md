@@ -6,7 +6,9 @@ A simulator in which the user will be able to hear phrases in a foreign language
 
 Tech: 
   Front-end: React.js, context, react-speech-kit. mic-recorder
+  
   Back-end: Nest.js, TypeScript, MongoDB, Deepgram SDK
+  
 Linters: 
   Eslint, Prettier 
   
