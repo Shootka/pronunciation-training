@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "npm-run-all client",
-    "client": "cd client && npm run rport && npm i && npm start",
+    "start": "npm-run-all --parallel server client",
+    "client": "cd client && npm i && npm run build",
     "server" : "cd server && npm i && npm start" 
   },
   "repository": {
