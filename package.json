@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npm-run-all client",
-    "client": "cd client && npm i && npm start",
+    "client": "cd client && npm run rport && npm i && npm start",
     "server" : "cd server && npm i && npm start" 
   },
   "repository": {

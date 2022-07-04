@@ -18,7 +18,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "PORT=process.env.PORT || 3000 && react-scripts start",
+    "start": "react-scripts start",
+    "rport": "export PORT=process.env.PORT || 3000",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
