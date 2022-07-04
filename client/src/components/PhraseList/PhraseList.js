@@ -1,4 +1,4 @@
-import React, {useContext, useMemo, useState} from 'react';
+import React, {useContext, useMemo} from 'react';
 import Phrase from "../Phrase/Phrase";
 import './PhraseList.scss'
 import Modal from "../Modal/Modal";
@@ -7,6 +7,7 @@ import Form from "../Form/Form";
 import context from "../../context/context";
 
 const PhraseList = () => {
+
   const {phraseList, setPhraseList} = useContext(context.PhraseContext)
   const {modalActive, setModalActive} = useContext(context.ModalContext)
 
@@ -16,11 +17,10 @@ const PhraseList = () => {
         key={ph?._id || Math.random()}
         id={ph?._id}
         phrase={ph.phrase}
-        number={index + 1}/>
+        number={index + 1}
+        />
     })
   }
-
-  console.log(phraseList)
 
   return (
     <div className={'container'}>
@@ -40,4 +40,4 @@ const PhraseList = () => {
   );
 };
 
-export default React.memo(PhraseList);
+export default PhraseList;

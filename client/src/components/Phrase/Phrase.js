@@ -5,19 +5,25 @@ import icons from "../../assets/icons.js";
 import context from "../../context/context";
 import query from "../../query/query";
 import './Phrase.scss'
+import axios from "axios";
 
 const Phrase = ({phrase, id, number}) => {
+
   const {speak, voices} = useSpeechSynthesis();
   const {filter} = useContext(context.FilterContext)
 
   const [stop, setStop] = useState(false)
   const [show, setShow] = useState(false)
+  const [score, setScore] = useState(0)
 
+  const [countOfTry, setCountOfTry] = useState(1)
+  const [average, setAverage] = useState(0)
   const [recordState, setRecordState] = useState(RecordState.NONE)
-  const {setPhraseList} = useContext(context.PhraseContext)
-  const {setSelectPhrase} = useContext(context.selectPhraseContext)
+  let termPhrases = JSON.parse(window.sessionStorage.getItem(`phrases-${filter.lang}`)) || []
 
-  const [select, setSelect] = useState({id: number, lang: filter.lang})
+
+  const {setPhraseList} = useContext(context.PhraseContext)
+  const {selectPhrase, setSelectPhrase} = useContext(context.selectPhraseContext)
 
   const filterVoice = (voices) => {
     return voices
@@ -28,41 +34,82 @@ const Phrase = ({phrase, id, number}) => {
         && el.name.indexOf('Google') >= 0
       )
   }
+
   const filteredVoices = useMemo(() => filterVoice(voices), [voices])
 
   const startRecording = () => {
     setStop(!stop)
-    console.log('start')
     setRecordState(RecordState.START)
   }
-  const onClickPhrase = (e) => {
+
+  const onClickPhrase = () => {
     setShow(!show)
-    setSelect({
+    setAverage(score + selectPhrase.last)
+    console.log(average)
+    setSelectPhrase({
       id: number,
-      lang: filter.lang
+      lang: filter.lang,
+      last: score,
+      better: score,
+      count: countOfTry,
+      average: score + selectPhrase.last / countOfTry
     })
-    window.sessionStorage.setItem('selected', JSON.stringify(select))
-    setSelectPhrase(select)
   }
+
   const stopRecording = () => {
     setStop(!stop)
-    console.log('stop')
     setRecordState(RecordState.STOP)
   }
+
   const onStop = async (audioData) => {
     let fd = new FormData()
     fd.append('voice', audioData.blob)
-    console.log(fd.get('voice'));
-    await query.sendAudio(fd)
+    fd.append('language', filter.lang)
+    fd.append('phrase', phrase)
+
+    await axios({
+      url: "/api/pronunciation/result",
+      method: 'POST',
+      data: fd,
+      headers: {
+        "Content-Type": "multipart/form-data"
+      }
+    }).then(res => {
+      setCountOfTry(countOfTry+1)
+      setScore(score > res.data ? score : res.data)
+      setAverage(score + res.data / countOfTry)
+      setSelectPhrase({
+        id: number,
+        lang: filter.lang,
+        last: res.data,
+        better: score > res.data ? score : res.data,
+        count: countOfTry,
+        average: (score + res.data) / countOfTry
+      })
+      termPhrases.push(selectPhrase)
+    })
   }
+  termPhrases = termPhrases?.filter((elem,index,array) => {
+    if(elem.id !== selectPhrase.id
+      && (elem.last !== selectPhrase.last
+      || elem.better !== selectPhrase.better)){
+     return array[index] = elem
+    }else if(elem.id !== selectPhrase.id) {
+      return elem
+    }
+  })
+
+  termPhrases.push(selectPhrase)
+  window.sessionStorage.setItem(`phrases-${filter.lang}`,JSON.stringify(termPhrases))
+  window.sessionStorage.setItem('selected', JSON.stringify(selectPhrase))
+
   const onDeletePhrase = async (e) => {
     e.stopPropagation()
-    query.deletePhrase(filter.lang, id)
-    setPhraseList(await query.fetchPhrase(filter.lang))
+    await query.deletePhrase(filter.lang, id, setPhraseList)
   }
+
   return (
     <div className={"phrase-box"}>
-
       <div className={'phrase-box__container'}
            id={id}
            onClick={(e) => onClickPhrase(e)}>
@@ -96,4 +143,4 @@ const Phrase = ({phrase, id, number}) => {
   );
 };
 
-export default React.memo(Phrase);
+export default Phrase;

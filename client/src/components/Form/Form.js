@@ -2,15 +2,16 @@ import React, {useState, useContext} from 'react';
 import context from "../../context/context";
 import './Form.scss'
 import query from '../../query/query.js'
+import axios from "axios";
 
 const Form = () => {
   const [value, setValue] = useState("")
   const [error, setError] = useState('')
 
-  const {setPhraseList} = useContext(context.PhraseContext)
+  const {phraseList, setPhraseList} = useContext(context.PhraseContext)
   const {modalActive, setModalActive} = useContext(context.ModalContext)
-
   const {filter} = useContext(context.FilterContext)
+
   const handleChange = (e) => {
     setValue(e.target.value)
   }
@@ -18,8 +19,7 @@ const Form = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (value !== '') {
-      await query.addNewPhrase(filter.lang, value)
-      setPhraseList(await query.fetchPhrase(filter.lang))
+      await query.addNewPhrase(filter.lang, value, setPhraseList)
       setValue('')
       setModalActive(!modalActive)
       setError('')

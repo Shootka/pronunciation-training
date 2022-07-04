@@ -7,8 +7,16 @@ import context from "./context/context";
 
 function Main() {
   const [phraseList, setPhraseList] = useState([])
-  const [selectPhrase, setSelectPhrase] = useState(JSON.parse(window.sessionStorage.getItem('selected')) || {})
-  console.log('--',selectPhrase)
+  const [selectPhrase, setSelectPhrase] = useState(
+    JSON.parse(window.sessionStorage.getItem('selected')) || {
+      id: 'none',
+      lang: 0,
+      last: 0,
+      better: 0,
+      count: 0,
+      average: 0
+    })
+
   const [filter, setFilter] = useState(JSON.parse(window.sessionStorage.getItem('filter'))
     || {
       lang: "en",
