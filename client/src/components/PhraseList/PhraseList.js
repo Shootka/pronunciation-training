@@ -1,4 +1,4 @@
-import React, {useContext, useMemo, useState} from 'react';
+import React, {useContext, useMemo} from 'react';
 import Phrase from "../Phrase/Phrase";
 import './PhraseList.scss'
 import Modal from "../Modal/Modal";
@@ -10,8 +10,7 @@ const PhraseList = () => {
 
   const {phraseList, setPhraseList} = useContext(context.PhraseContext)
   const {modalActive, setModalActive} = useContext(context.ModalContext)
-  const [activePhrases, setActivePhrases] = useState(
-    JSON.parse(window.sessionStorage.getItem('active-ph')) || [])
+
   const renderList = (phraseList) => {
     return !!phraseList?.length && phraseList?.map((ph, index) => {
       return <Phrase
