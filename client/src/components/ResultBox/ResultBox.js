@@ -8,7 +8,6 @@ const ResultBox = () => {
   return (
     <div className={'result-box'}>
       <h3 className={'result-box__title'}>Result: </h3>
-
       <p>Select phrase: {selectPhrase?.id}</p>
       <p>lang of phrase: {selectPhrase?.lang}</p>
       <p>last try: {selectPhrase?.last}%</p>

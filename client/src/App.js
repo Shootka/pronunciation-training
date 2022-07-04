@@ -1,10 +1,10 @@
-import './App.css';
+import {useEffect, useContext} from "react";
 import PhraseList from "./components/PhraseList/PhraseList";
-import {useEffect, useContext, useState} from "react";
 import Filter from "./components/Filter/Filter";
 import context from "./context/context";
 import axios from "axios";
 import ResultBox from "./components/ResultBox/ResultBox";
+import './App.css';
 
 function App() {
   const {filter} = useContext(context.FilterContext)

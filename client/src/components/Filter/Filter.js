@@ -10,7 +10,6 @@ const Filter = () => {
   const onFlagClick = (e) => {
     setFilter({...filter, lang: e.currentTarget.id})
     setClickedFlag(e.currentTarget.id)
-    console.log(e.currentTarget.id)
   }
 
   return (

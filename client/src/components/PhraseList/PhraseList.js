@@ -1,10 +1,10 @@
 import React, {useContext, useMemo} from 'react';
 import Phrase from "../Phrase/Phrase";
-import './PhraseList.scss'
 import Modal from "../Modal/Modal";
-import icons from "../../assets/icons.js";
 import Form from "../Form/Form";
+import icons from "../../assets/icons.js";
 import context from "../../context/context";
+import './PhraseList.scss'
 
 const PhraseList = () => {
 

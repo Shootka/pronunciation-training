@@ -4,8 +4,8 @@ import AudioReactRecorder, {RecordState} from 'audio-react-recorder'
 import icons from "../../assets/icons.js";
 import context from "../../context/context";
 import query from "../../query/query";
-import './Phrase.scss'
 import axios from "axios";
+import './Phrase.scss'
 
 const Phrase = ({phrase, id, number}) => {
 
