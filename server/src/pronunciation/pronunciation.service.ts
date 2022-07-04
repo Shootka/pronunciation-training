@@ -5,6 +5,7 @@ import { PronunciationDocument } from './schemas/pronunciation.schema';
 import { CreatePhrases } from './dto/create-phrase.dto';
 import { GetPhrases } from './dto/get-phrases.dto';
 import { DeletePhrases } from './dto/delete-phrase.dto';
+import { ConfigService } from '@nestjs/config'
 const { Deepgram } = require("@deepgram/sdk");
 
 
@@ -12,7 +13,8 @@ const { Deepgram } = require("@deepgram/sdk");
 export class PronunciationService {
     constructor(@InjectModel('en') private readonly enPronunciation: Model<PronunciationDocument>,
                 @InjectModel('fr') private readonly frPronunciation: Model<PronunciationDocument>,
-                @InjectModel('es') private readonly esPronunciation: Model<PronunciationDocument>
+                @InjectModel('es') private readonly esPronunciation: Model<PronunciationDocument>,
+                private readonly configService: ConfigService
     ) {}
 
 
@@ -46,11 +48,12 @@ export class PronunciationService {
     }
 
     async result(voice: Express.Multer.File, info: CreatePhrases) {
-        const deepgram = new Deepgram('335d777d4ac72d907dcd4de4a28c9f58619c2ca1');        
+        const deepgram = new Deepgram(this.configService.get('DEEPGRAM_ACCESS_TOKEN'));        
         const response = await deepgram.transcription.preRecorded(
             { buffer: voice.buffer, mimetype: voice.mimetype },
             { language: info.language }
         )
+        console.log(response.results.channels[0].alternatives[0].transcript);
         
         const resultPhrase = response.results.channels[0].alternatives[0].transcript.trim().toLowerCase().split(' ')
         const phrase = info.phrase.trim().toLowerCase()
