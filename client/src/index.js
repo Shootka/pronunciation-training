@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
 import context from "./context/context";
 
 function Main() {
@@ -43,4 +42,4 @@ ReactDOM.render(
   <Main/>,
   document.getElementById('root')
 );
-reportWebVitals();
+
