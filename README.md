@@ -1,6 +1,6 @@
 # pronunciation-training
 
-Test task by Andrew Litvinenko(front-end) and Kostya Bardok(back-end)
+Test task by Andrew Litvinenko(front-end) and Kostya Bardok(back-end) https://github.com/KostyaBardok
 
 A simulator in which the user will be able to hear phrases in a foreign language, repeat them, and the speech recognition system will evaluate the correctness of his pronunciation.
 
