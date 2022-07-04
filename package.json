@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "npm-run-all --serial client server",
+    "start": "npm-run-all client",
     "client": "cd client && npm i && npm start",
     "server" : "cd server && npm i && npm start" 
   },
