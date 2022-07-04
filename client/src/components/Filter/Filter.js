@@ -12,8 +12,6 @@ const Filter = () => {
     setClickedFlag(e.currentTarget.id)
   }
 
-
-
   return (
     <div className={'filter-wrapper'}>
       {icons?.COUNTRY?.map((flag, index) =>
