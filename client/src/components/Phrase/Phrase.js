@@ -122,7 +122,7 @@ const Phrase = ({phrase, id, number}) => {
           && <h2 className={show
             ? "phrase-box__title-active bigger"
             : "phrase-box__title bigger"}>{phrase}</h2>}
-        {phrase.length < 47
+        {phrase.length <= 47
           && <h2 className={"phrase-box__title "}>{phrase}</h2>}
         <div className={"phrase-box__button-box"}
              onClick={event => (event.stopPropagation())}>
