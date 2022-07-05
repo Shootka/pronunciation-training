@@ -12,10 +12,10 @@ export class PronunciationController {
     constructor(private pronunciationService: PronunciationService) {
     }
 
-    // @Get('allphrases/:language')
-    // async allphrases(@Param() info: GetPhrases) {
-    //     return this.pronunciationService.allphrases(info);
-    // }
+    @Get('allphrases/:language')
+    async allphrases(@Param() info: GetPhrases) {
+        return this.pronunciationService.allphrases(info);
+    }
 
     @Post('createphrase')
     async createphrase(@Body() info: CreatePhrases) {

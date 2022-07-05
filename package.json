@@ -6,7 +6,7 @@
   "scripts": {
     "start": "npm-run-all --parallel client server",
     "client": "cd client && npm i && npm run build",
-    "server" : "cd server && npm i && npm run start:prod"
+    "server" : "cd server && npm i && npm run build && npm run start:prod"
   },
   "repository": {
     "type": "git",
