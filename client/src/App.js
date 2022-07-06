@@ -9,12 +9,13 @@ import './App.css';
 function App() {
   const {filter} = useContext(context.FilterContext)
   const {setPhraseList} = useContext(context.PhraseContext)
+  const {voices} = useContext(context.voiceContext)
 
   useEffect(() => {
     axios.get(`/api/pronunciation/allphrases/${filter.lang}`)
       .then(res => {setPhraseList(res.data)})
       .catch(err => console.error(err))
-  }, [filter.lang])
+  }, [filter.lang, voices])
 
   useEffect(() => {
     window.sessionStorage.setItem('filter', JSON.stringify(filter))

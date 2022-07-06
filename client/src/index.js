@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import context from "./context/context";
+import { useSpeechSynthesis } from 'react-speech-kit';
 
 function Main() {
   const [phraseList, setPhraseList] = useState([])
@@ -22,14 +23,17 @@ function Main() {
       gender: 'male'
     })
   const [modalActive, setModalActive] = useState(false)
-
+  const { voices } = useSpeechSynthesis()
+  
   return (
     <React.StrictMode>
       <context.PhraseContext.Provider value={{phraseList, setPhraseList}}>
         <context.ModalContext.Provider value={{modalActive, setModalActive}}>
           <context.FilterContext.Provider value={{filter, setFilter}}>
             <context.selectPhraseContext.Provider value={{selectPhrase, setSelectPhrase}}>
+              <context.voiceContext.Provider value={{voices}}>
               <App/>
+              </context.voiceContext.Provider>
             </context.selectPhraseContext.Provider>
           </context.FilterContext.Provider>
         </context.ModalContext.Provider>

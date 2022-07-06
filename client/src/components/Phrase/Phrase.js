@@ -9,8 +9,10 @@ import './Phrase.scss'
 
 const Phrase = ({phrase, id, number}) => {
 
-  const {speak, voices} = useSpeechSynthesis();
+  const {speak} = useSpeechSynthesis();
   const {filter} = useContext(context.FilterContext)
+
+  const {voices} = useContext(context.voiceContext)
 
   const [stop, setStop] = useState(false)
   const [show, setShow] = useState(false)
@@ -24,10 +26,10 @@ const Phrase = ({phrase, id, number}) => {
 
   const {setPhraseList} = useContext(context.PhraseContext)
   const {selectPhrase, setSelectPhrase} = useContext(context.selectPhraseContext)
-
+  
   const filterVoice = (voices) => {
     return voices
-      .filter(el =>
+      ?.filter(el =>
         el?.lang
           .toLowerCase()
           .indexOf(filter.lang) >= 0
